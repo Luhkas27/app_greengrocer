@@ -2,6 +2,7 @@ import 'package:app_greengrocer/src/config/app_data.dart' as appData;
 import 'package:app_greengrocer/src/config/custom_colors.dart';
 import 'package:app_greengrocer/src/models/cart_item_model.dart';
 import 'package:app_greengrocer/src/pages/cart/components/cart_tile.dart';
+import 'package:app_greengrocer/src/pages/widgets/payment_dialog.dart';
 import 'package:app_greengrocer/src/services/utils_services.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
       appData.cartItems.remove(cartItem);
+      utilsServices.showToast(
+          message: '${cartItem.item.itemName} removido(a) do carrinho');
     });
   }
 
@@ -91,7 +94,20 @@ class _CartTabState extends State<CartTab> {
                     ),
                     onPressed: () async {
                       bool? result = await showOrderConfirmation();
-                      print(result);
+
+                      if (result ?? false) {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return PaymentDialog(
+                              order: appData.orders.first,
+                            );
+                          },
+                        );
+                      } else {
+                        utilsServices.showToast(
+                            message: 'Pedido não confirmado', isError: true);
+                      }
                     },
                     child: const Text(
                       'Concluir pedido',

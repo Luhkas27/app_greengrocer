@@ -1,5 +1,5 @@
 import 'package:app_greengrocer/src/config/custom_colors.dart';
-import 'package:app_greengrocer/src/pages/auth/components/custom_text_field.dart';
+import 'package:app_greengrocer/src/pages/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
